@@ -11,16 +11,51 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.9"
 pandas = "^2.2.0"
+pyarrow = "^16.0.0"
 numpy = "^1.26.4"
-notebook = "^7.1.0"
-scikit-learn = "^1.4.1.post1"
-seaborn = "^0.13.2"
-jupyter-black = "^0.3.4"
+scikit-learn = "^1.4.2"
 tqdm = "^4.66.2"
 statsmodels = "^0.14.1"
 gutenbergpy = "^0.3.5"
+joblib = "^1.4.0"
+
+[tool.poetry.group.dev.dependencies]
+jupyter-black = "^0.3.4"
+notebook = "^7.1.0"
+pre-commit = "^3.7.0"
+black = "^24.4.2"
+isort = "^5.13.2"
+mypy = "^1.10.0"
+autoflake = "^2.3.1"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 99
+
+[tool.isort]
+line_length = 99
+profile = "black"
+
+[tool.mypy]
+files = "src/**/*.py"
+warn_unused_configs = true
+allow_redefinition = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "pandas.*",
+  "sklearn.*",
+  "tqdm.*",
+  "scipy.*",
+  "joblib.*",
+  "gutenbergpy.*",
+]
+
+[tool.autoflake]
+in_place = true
+remove_all_unused_imports = true
