@@ -25,11 +25,11 @@ class Constraint(BaseEstimator):
         * predict - given a value, check if it violates the constraint.
     """
 
-    compatable_metrics: Tuple[metrics.MetricType, ...] = (metrics.Metric,)
+    COMPATABLE_METRICS: Tuple[metrics.MetricType, ...] = (metrics.Metric,)
 
     @classmethod
-    def is_metric_compatable(self, metric: metrics.MetricType) -> bool:
-        return issubclass(metric, self.compatable_metrics)
+    def is_metric_compatable(cls, metric: metrics.MetricType) -> bool:
+        return issubclass(metric, cls.COMPATABLE_METRICS)
 
     def __init__(
         self,
@@ -107,18 +107,22 @@ class Constraint(BaseEstimator):
     def predict(self, column: pd.Series, **kwargs) -> bool:
         check_is_fitted(self)
 
-        if issubclass(self.metric, metrics.SingleDistributionMetric):
-            m = self.metric.calculate(column)
-        else:
-            m = self.metric.calculate(column, self.last_reference_sample_)
-
-        m = self._preprocess_metric(cast(float, m))
+        m = self._calculate_prediction_metric(column)
         prediction = self._predict(m, **kwargs)
 
         return prediction
 
     def _predict(self, m: float, **kwargs) -> bool:
         return self.u_lower_ <= m <= self.u_upper_
+    
+    def _calculate_prediction_metric(self, column: pd.Series) -> float:
+        if issubclass(self.metric, metrics.SingleDistributionMetric):
+            m = self.metric.calculate(column)
+        else:
+            m = self.metric.calculate(column, self.last_reference_sample_)
+        
+        m = self._preprocess_metric(cast(float, m))
+        return m
 
     def _preprocess_metric(self, metric: float) -> float:
         m = self.metric_preprocessing_function(metric)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "miautawn-auto-validate-by-history"
-version = "0.2.1"
+version = "0.3.0"
 description = "Automatic data quality validation for data pipelines"
 authors = ["miautawn <miautawn@gmail.com>"]
 packages = [
@@ -11,7 +11,7 @@ repository = "https://github.com/Miautawn/Auto-Validate-By-History-Clone"
 keywords = ["data", "quality", "pipeline"]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.10,<4.0"
 pandas = "^2.2.0"
 pyarrow = "^16.0.0"
 numpy = "^1.26.4"
@@ -29,6 +29,7 @@ black = "^24.4.2"
 isort = "^5.13.2"
 mypy = "^1.10.0"
 autoflake = "^2.3.1"
+matplotlib = "^3.9.0"
 
 [build-system]
 requires = ["poetry-core"]

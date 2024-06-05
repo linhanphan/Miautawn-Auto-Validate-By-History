@@ -6,7 +6,9 @@ import pandas as pd
 from scipy import integrate
 
 import avh.metrics as metrics
+import avh.utility_functions as utility_functions
 from avh.constraints._base import Constraint
+
 
 
 class ConstantConstraint(Constraint):
@@ -64,7 +66,7 @@ class CantelliConstraint(Constraint):
     Cantelli!
     """
 
-    compatable_metrics: Tuple[metrics.MetricType, ...] = (
+    COMPATABLE_METRICS: Tuple[metrics.MetricType, ...] = (
         metrics.EMD,
         metrics.KsDist,
         metrics.CohenD,
@@ -98,7 +100,8 @@ class CantelliConstraint(Constraint):
 
 
 class CLTConstraint(Constraint):
-    compatable_metrics: Tuple[metrics.MetricType, ...] = (
+
+    COMPATABLE_METRICS: Tuple[metrics.MetricType, ...] = (
         metrics.RowCount,
         metrics.Mean,
         metrics.MeanStringLength,
