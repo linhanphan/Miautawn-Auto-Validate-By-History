@@ -24,7 +24,7 @@ H = [pipeline.generate_normal(10000, 30) for i in range(30)]
 
 # Finally, let's see what data quality constraints does the AVH generate
 #   for the 'money' column of our data:
-PS = AVH(columns=["money"], random_state=42).generate(H, fpr_target=0.05)
+PS = AVH(columns=["money"], random_state=42, verbose=2).generate(H, fpr_target=0.05)
 
 ps_money = PS["money"]
 print("Contraint Rules:")
